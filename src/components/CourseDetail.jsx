@@ -19,39 +19,49 @@ const CourseDetail = () => {
 
   return (
     <div className="container mt-4">
-      <h2>{course.name}</h2>
-      <img
-        src={course.thumbnail}
-        alt={course.name}
-        className="img-fluid mb-3"
-        style={{ maxHeight: "300px" }}
-      />
-      <p>
-        <strong>Instructor:</strong> {course.instructor}
-      </p>
-      <p>
-        <strong>Description:</strong> {course.description}
-      </p>
-      <p>
-        <strong>Duration:</strong> {course.duration}
-      </p>
-      <p>
-        <strong>Schedule:</strong> {course.schedule}
-      </p>
-      <p>
-        <strong>Location:</strong> {course.location}
-      </p>
-      <p>
-        <strong>Enrollment Status:</strong> {course.enrollmentStatus}
-      </p>
-
-      <h4>Prerequisites</h4>
-      <ul>
-        {course.prerequisites.map((prereq, index) => (
-          <li key={index}>{prereq}</li>
-        ))}
-      </ul>
-
+      <div className="d-flex justify-content-between">
+        <h2>{course.name}</h2>
+        <div>
+          <Link to="/course-list" className="btn btn-secondary">
+            Back to Courses
+          </Link>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-4">
+          <img
+            src={`../images/${course.thumbnail}`}
+            alt={course.name}
+            className="img-fluid mb-3 rounded"
+          />
+        </div>
+        <div className="col-8">
+          <p>
+            <strong>Instructor:</strong> {course.instructor}
+          </p>
+          <p>
+            <strong>Description:</strong> {course.description}
+          </p>
+          <p>
+            <strong>Duration:</strong> {course.duration}
+          </p>
+          <p>
+            <strong>Schedule:</strong> {course.schedule}
+          </p>
+          <p>
+            <strong>Location:</strong> {course.location}
+          </p>
+          <p>
+            <strong>Enrollment Status:</strong> {course.enrollmentStatus}
+          </p>
+          <h4>Prerequisites</h4>
+          <ul>
+            {course.prerequisites.map((prereq, index) => (
+              <li key={index}>{prereq}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
       <h4>Syllabus</h4>
       <ul className="list-group mb-3">
         {course.syllabus.map((item) => (
@@ -80,10 +90,6 @@ const CourseDetail = () => {
           ))}
         </tbody>
       </table>
-
-      <Link to="/" className="btn btn-secondary">
-        Back to Courses
-      </Link>
     </div>
   );
 };

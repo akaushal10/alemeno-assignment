@@ -13,6 +13,9 @@ import {
   PointElement,
 } from "chart.js";
 import { useSelector } from "react-redux";
+import DurationChart from "./DurationChart";
+import { courses } from "../data/data";
+import StudentCourses from "./StudentCourses";
 
 ChartJS.register(
   CategoryScale,
@@ -36,60 +39,94 @@ const getEnrollmentStatusData = (courses) => {
     datasets: [
       {
         data: Object.values(statusCounts),
-        backgroundColor: ["#36A2EB", "#FF6384"],
+        backgroundColor: ["#4CAF50", "#FFC107", "#F44336"],
       },
     ],
   };
 };
 
 const getStudentEnrollmentData = (courses) => {
-  return {
+  const result = {
     labels: courses.map((course) => course.name),
     datasets: [
       {
+        label: "No. of Students",
         data: courses.map((course) => course.students.length),
-        backgroundColor: "#FFCE56",
+        backgroundColor: "#FFC107",
       },
     ],
   };
+  console.log(result);
+  return result;
 };
 
-const getWeeklySyllabusData = (courses) => {
-  const weekData = {};
+const prepareDurationChartData = (courses) => {
+  return courses.map((course) => ({
+    subject: course.name,
+    duration: parseInt(course.duration), // Convert "12 weeks" -> 12
+  }));
+};
+const transformStudentData = (courses) => {
+  const studentMap = new Map();
+
   courses.forEach((course) => {
-    course.syllabus.forEach((week) => {
-      weekData[week.week] = (weekData[week.week] || 0) + 1;
+    course.students.forEach((student) => {
+      if (!studentMap.has(student.id)) {
+        studentMap.set(student.id, {
+          studentName: student.name,
+          studentEmail: student.email,
+          studentId: student.id,
+          courses: [],
+        });
+      }
+
+      studentMap.get(student.id).courses.push({
+        id: course.id,
+        name: course.name,
+        instructor: course.instructor,
+        thumbnail: course.thumbnail,
+        status:
+          course.enrollmentStatus === "Closed" ? "Completed" : "In-Progress",
+        isCompleted: course.enrollmentStatus === "Closed",
+      });
     });
   });
-  return {
-    labels: Object.keys(weekData).map((week) => `Week ${week}`),
-    datasets: [{ data: Object.values(weekData), backgroundColor: "#4BC0C0" }],
-  };
+
+  return Array.from(studentMap.values());
 };
 
 const Dashboard = () => {
   const courseData = useSelector((state) => state.courses);
-
+  const studentData = transformStudentData(courseData);
   return (
     <div className="container mt-4">
-      <h2 className="text-center mb-4">Course Dashboard</h2>
+      <h2 className=" mb-4">Student Information</h2>
+      <div className="row mb-3">
+        <div className="col-12">
+          <StudentCourses students={studentData} />
+        </div>
+      </div>
       <div className="row">
-        <div className="col-md-6">
-          <div className="card p-3 mb-4">
-            <h4>Enrollment Status</h4>
+        <h2 className=" mb-2">Course Analytics</h2>
+        <div className="col-md-4 card border-0">
+          <div className="border rounded p-2 pb-4">
+            <h5>Enrollment Status</h5>
             <Pie data={getEnrollmentStatusData(courseData)} />
           </div>
         </div>
-        <div className="col-md-6">
-          <div className="card p-3 mb-4">
-            <h4>Student Enrollment</h4>
+        <div className="col-md-8 card border-0 ms-auto">
+          <div className="border rounded p-2">
+            <h5>Student Enrollment</h5>
             <Bar data={getStudentEnrollmentData(courseData)} />
           </div>
         </div>
-        <div className="col-md-12">
-          <div className="card p-3 mb-4">
-            <h4>Weekly Syllabus Breakdown</h4>
-            <Line data={getWeeklySyllabusData(courseData)} />
+      </div>
+      <div className="row mt-3">
+        <div className="col-12 card border-0 text-left">
+          <div className="border rounded p-2">
+            <DurationChart
+              data={prepareDurationChartData(courseData)}
+            ></DurationChart>
           </div>
         </div>
       </div>

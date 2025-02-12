@@ -17,15 +17,15 @@ const CourseList = () => {
           <div className="col-md-4" key={course.id}>
             <div className="card mb-3">
               <img
-                src={course.thumbnail}
+                src={`images/${course.thumbnail}`}
                 className="card-img-top"
                 alt={course.name}
-                style={{ height: "200px", objectFit: "cover" }}
+                style={{ objectFit: "cover" }}
               />
               <div className="card-body">
                 <h5 className="card-title">{course.name}</h5>
                 <p className="card-text">
-                  {course.description.substring(0, 80)}...
+                  {course.description.substring(0, 75)}...
                 </p>
                 <Link to={`/course/${course.id}`} className="btn btn-primary">
                   View Details
