@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/alemeno-assignment/static/css/main.e6c13ad2.css",
+    "main.js": "/alemeno-assignment/static/js/main.8970cab8.js",
+    "static/js/488.c80771ea.chunk.js": "/alemeno-assignment/static/js/488.c80771ea.chunk.js",
+    "index.html": "/alemeno-assignment/index.html",
+    "main.e6c13ad2.css.map": "/alemeno-assignment/static/css/main.e6c13ad2.css.map",
+    "main.8970cab8.js.map": "/alemeno-assignment/static/js/main.8970cab8.js.map",
+    "488.c80771ea.chunk.js.map": "/alemeno-assignment/static/js/488.c80771ea.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.8970cab8.js"
+  ]
+}
