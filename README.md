@@ -6,6 +6,7 @@ This is a React-based project featuring a **dashboard** as the main page, which 
 
 - A **Course List** page that provides information about available courses.
 - A **Course Details** page that opens when a course card is clicked, displaying detailed information about the selected course.
+- [https://akaushal10.github.io/alemeno-assignment](https://akaushal10.github.io/alemeno-assignment) You can access project by clicking the link.
 
 ## Features
 
